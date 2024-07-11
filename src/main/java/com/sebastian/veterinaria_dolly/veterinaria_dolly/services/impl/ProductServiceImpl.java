@@ -3,14 +3,15 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.services.impl;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Product;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.ProductService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseWrapper<List<Product>> findAll() {
-        //return List.of();
         return new ResponseWrapper<>(List.of(), "findAll desde el servicio de implementación");
     }
 

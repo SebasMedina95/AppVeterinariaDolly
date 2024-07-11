@@ -2,17 +2,25 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import java.util.Date;
-import java.util.Objects;
 
+@Data
 @Entity
 @Table(name = "TBL_PRODUCTS")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Product {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
+    @Comment("Clave primaria")
     private Long id;
 
     @Column(name = "NAME", unique = true, nullable = false, length = 300 )
@@ -24,7 +32,7 @@ public class Product {
     private Float price;
 
     @Column(name = "STOCK", nullable = false )
-    @Comment("Precio del producto")
+    @Comment("Stock del producto")
     private Integer stock;
 
     @Column(name = "SLUG", unique = true, nullable = false, length = 1000 )
@@ -34,6 +42,10 @@ public class Product {
     @Column(name = "DESCRIPTION", nullable = true, length = 2000 )
     @Comment("Descripción del producto")
     private String description;
+
+    @Column(name = "SIZE", nullable = false, length = 1 )
+    @Comment("Tamaño del producto")
+    private String size;
 
     @Column(name = "STATUS" )
     @Comment("Estado del producto")
@@ -56,185 +68,15 @@ public class Product {
     private Date dateUpdated;
 
     @ManyToOne
-    @JoinColumn(name = "FK_CATEGORIA")
+    @JoinColumn(name = "FK_CATEGORY")
     @JsonManagedReference
+    @Comment("Categoría relacionada")
     private Category category;
 
-    public Product() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "FK_SUPPLIER")
+    @JsonManagedReference
+    @Comment("Proveedor relacionado")
+    private Supplier supplier;
 
-    public Product(String name,
-                   Float price,
-                   Integer stock,
-                   String slug,
-                   String description,
-                   Boolean status,
-                   String userCreated,
-                   Date dateCreated,
-                   String userUpdated,
-                   Date dateUpdated,
-                   Category category) {
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-        this.slug = slug;
-        this.description = description;
-        this.status = status;
-        this.userCreated = userCreated;
-        this.dateCreated = dateCreated;
-        this.userUpdated = userUpdated;
-        this.dateUpdated = dateUpdated;
-        this.category = category;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public String getUserCreated() {
-        return userCreated;
-    }
-
-    public void setUserCreated(String userCreated) {
-        this.userCreated = userCreated;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public String getUserUpdated() {
-        return userUpdated;
-    }
-
-    public void setUserUpdated(String userUpdated) {
-        this.userUpdated = userUpdated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", stock=" + stock +
-                ", slug='" + slug + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", userCreated='" + userCreated + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", userUpdated='" + userUpdated + '\'' +
-                ", dateUpdated=" + dateUpdated +
-                ", category=" + category +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-               Objects.equals(name, product.name) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(stock, product.stock) &&
-                Objects.equals(slug, product.slug) &&
-                Objects.equals(description, product.description) &&
-                Objects.equals(status, product.status) &&
-                Objects.equals(userCreated, product.userCreated) &&
-                Objects.equals(dateCreated, product.dateCreated) &&
-                Objects.equals(userUpdated, product.userUpdated) &&
-                Objects.equals(dateUpdated, product.dateUpdated) &&
-                Objects.equals(category, product.category);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                id,
-                name,
-                price,
-                stock,
-                slug,
-                description,
-                status,
-                userCreated,
-                dateCreated,
-                userUpdated,
-                dateUpdated,
-                category
-        );
-    }
 }

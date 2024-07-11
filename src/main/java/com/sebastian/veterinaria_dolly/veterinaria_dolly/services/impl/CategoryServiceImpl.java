@@ -3,15 +3,16 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.services.impl;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Category;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
     public ResponseWrapper<List<Category>> findAll() {
-        //return List.of();
         return new ResponseWrapper<>(List.of(), "findAll desde el servicio de implementación");
     }
 
