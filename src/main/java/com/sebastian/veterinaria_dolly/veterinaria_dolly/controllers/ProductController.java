@@ -2,7 +2,7 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Product;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -23,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<?>> create(@RequestBody Product productRequest){ //!Pendiente DTO.
+    public ResponseEntity<ApiResponse<ResponseWrapper<Product>>> create(@RequestBody Product productRequest){ //!Pendiente DTO.
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
                         productService.create(productRequest),
@@ -36,7 +37,7 @@ public class ProductController {
     }
 
     @GetMapping("/find-all")
-    public ResponseEntity<ApiResponse<?>> findAll(){
+    public ResponseEntity<ApiResponse<ResponseWrapper<List<Product>>>> findAll(){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
                         productService.findAll(),
@@ -49,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/find-by-id/{id}")
-    public ResponseEntity<ApiResponse<?>> findById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<ResponseWrapper<Product>>> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
                         productService.findById(id),
@@ -62,7 +63,7 @@ public class ProductController {
     }
 
     @PutMapping("update-by-id/{id}")
-    public ResponseEntity<ApiResponse<?>> update(@RequestBody Product productRequest, @PathVariable Long id){ //!Pendiente DTO.
+    public ResponseEntity<ApiResponse<ResponseWrapper<Product>>> update(@RequestBody Product productRequest, @PathVariable Long id){ //!Pendiente DTO.
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
                         productService.update(id, productRequest),
@@ -75,7 +76,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete-by-id/{id}")
-    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<ResponseWrapper<Product>>> delete(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
                         productService.delete(id),

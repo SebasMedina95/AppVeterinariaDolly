@@ -13,26 +13,26 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseWrapper<List<Category>> findAll() {
-        return new ResponseWrapper<>(List.of(), "findAll desde el servicio de implementación");
+        return new ResponseWrapper<>(List.of(), "findAll desde el servicio Category de implementación");
     }
 
     @Override
     public ResponseWrapper<Category> findById(Long id) {
-        return new ResponseWrapper<>(null, "findById desde el servicio de implementación");
+        return new ResponseWrapper<>(null, "findById desde el servicio Category de implementación");
     }
 
     @Override
     public ResponseWrapper<Category> create(Category category) {
-        return new ResponseWrapper<>(null, "create desde el servicio de implementación");
+        return new ResponseWrapper<>(null, "create desde el servicio Category de implementación");
     }
 
     @Override
     public ResponseWrapper<Category> update(Long id, Category category) {
-        return new ResponseWrapper<>(null, "update desde el servicio de implementación");
+        return new ResponseWrapper<>(null, "update desde el servicio Category de implementación");
     }
 
     @Override
     public ResponseWrapper<Category> delete(Long id) {
-        return new ResponseWrapper<>(null, "delete desde el servicio de implementación");
+        return new ResponseWrapper<>(null, "delete desde el servicio Category de implementación");
     }
 }

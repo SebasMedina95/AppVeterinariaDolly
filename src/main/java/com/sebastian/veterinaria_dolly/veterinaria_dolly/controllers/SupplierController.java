@@ -1,9 +1,9 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Category;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Supplier;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.CategoryService;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,23 +13,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
-public class CategoryController {
+@RequestMapping("/api/suppliers")
+public class SupplierController {
 
-    private final CategoryService categoryService;
+    private final SupplierService supplierService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService){
-        this.categoryService = categoryService;
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> create(@RequestBody Category categoryRequest){ //! Pendiente DTO.
+    public ResponseEntity<ApiResponse<ResponseWrapper<Supplier>>> create(@RequestBody Supplier supplierRequest){ //! Pendiente DTO.
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
-                        categoryService.create(categoryRequest),
+                        supplierService.create(supplierRequest),
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (CREATE)",
+                                "Comunicación establecida con el controlador Supplier (CREATE)",
                                 HttpStatus.OK.value(),
                                 LocalDateTime.now()
                         )
@@ -37,12 +37,12 @@ public class CategoryController {
     }
 
     @GetMapping("/find-all")
-    public ResponseEntity<ApiResponse<ResponseWrapper<List<Category>>>> findAll(){ //! Mirar como aplicar la paginación
+    public ResponseEntity<ApiResponse<ResponseWrapper<List<Supplier>>>> findAll(){ //! Mirar como aplicar la paginación
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
-                        categoryService.findAll(),
+                        supplierService.findAll(),
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (FindAll)",
+                                "Comunicación establecida con el controlador Supplier (FindAll)",
                                 HttpStatus.OK.value(),
                                 LocalDateTime.now()
                         )
@@ -50,12 +50,12 @@ public class CategoryController {
     }
 
     @GetMapping("/find-by-id/{id}")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> findById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<ResponseWrapper<Supplier>>> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
-                        categoryService.findById(id),
+                        supplierService.findById(id),
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (findById)",
+                                "Comunicación establecida con el controlador Supplier (findById)",
                                 HttpStatus.OK.value(),
                                 LocalDateTime.now()
                         )
@@ -63,12 +63,12 @@ public class CategoryController {
     }
 
     @PutMapping("update-by-id/{id}")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> update(@RequestBody Category categoryRequest, @PathVariable Long id){ //!Pendiente DTO.
+    public ResponseEntity<ApiResponse<ResponseWrapper<Supplier>>> update(@RequestBody Supplier supplierRequest, @PathVariable Long id){ //!Pendiente DTO.
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
-                        categoryService.update(id, categoryRequest),
+                        supplierService.update(id, supplierRequest),
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (update)",
+                                "Comunicación establecida con el controlador Supplier (update)",
                                 HttpStatus.OK.value(),
                                 LocalDateTime.now()
                         )
@@ -76,12 +76,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete-by-id/{id}")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> delete(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<ResponseWrapper<Supplier>>> delete(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ApiResponse<>(
-                        categoryService.delete(id),
+                        supplierService.delete(id),
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (delete)",
+                                "Comunicación establecida con el controlador Supplier (delete)",
                                 HttpStatus.OK.value(),
                                 LocalDateTime.now()
                         )
