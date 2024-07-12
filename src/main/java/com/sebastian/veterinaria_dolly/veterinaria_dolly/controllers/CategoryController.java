@@ -2,6 +2,7 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Category;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreateCategoryDto;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdateCategoryDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPagedResourcesAssembler;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,21 +29,22 @@ import java.time.LocalDateTime;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final PagedResourcesAssembler<Category> pagedResourcesAssembler;
     private final CustomPagedResourcesAssembler<Category> customPagedResourcesAssembler;
 
     @Autowired
     public CategoryController(
             CategoryService categoryService,
-            PagedResourcesAssembler<Category> pagedResourcesAssembler,
             CustomPagedResourcesAssembler<Category> customPagedResourcesAssembler){
         this.categoryService = categoryService;
-        this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.customPagedResourcesAssembler = customPagedResourcesAssembler;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Object>> create(@Valid @RequestBody CreateCategoryDto categoryRequest, BindingResult result){
+    public ResponseEntity<ApiResponse<Object>> create(
+            @Valid
+            @RequestBody CreateCategoryDto categoryRequest,
+            BindingResult result
+    ){
 
         //? Chequeamos errores en los campos proporcionados
         if(result.hasFieldErrors()){
@@ -145,29 +146,79 @@ public class CategoryController {
     }
 
     @PutMapping("update-by-id/{id}")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> update(@RequestBody Category categoryRequest, @PathVariable Long id){ //!Pendiente DTO.
-        return ResponseEntity.status(HttpStatus.OK)
+    public ResponseEntity<ApiResponse<Object>> update(
+            @Valid
+            @RequestBody UpdateCategoryDto categoryRequest,
+            BindingResult result,
+            @PathVariable Long id
+    ){
+
+        if(result.hasFieldErrors()){
+            ErrorsValidationsResponse errors = new ErrorsValidationsResponse();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(
+                            errors.validation(result),
+                            new ApiResponse.Meta(
+                                    "Errores en los campos",
+                                    HttpStatus.BAD_REQUEST.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        ResponseWrapper<Category> categoryUpdate = categoryService.update(id, categoryRequest);
+
+        if( categoryUpdate.getData() != null ){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<>(
+                            categoryUpdate.getData(),
+                            new ApiResponse.Meta(
+                                    "Categoría Actualizada Correctamente.",
+                                    HttpStatus.OK.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponse<>(
-                        categoryService.update(id, categoryRequest),
+                        null,
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (update)",
-                                HttpStatus.OK.value(),
+                                categoryUpdate.getErrorMessage(),
+                                HttpStatus.BAD_REQUEST.value(),
                                 LocalDateTime.now()
                         )
                 ));
+
     }
 
     @DeleteMapping("/delete-by-id/{id}")
-    public ResponseEntity<ApiResponse<ResponseWrapper<Category>>> delete(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK)
+    public ResponseEntity<ApiResponse<Category>> delete(@PathVariable Long id){
+
+        ResponseWrapper<Category> categoryUpdate = categoryService.delete(id);
+
+        if( categoryUpdate.getData() != null ){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<>(
+                            categoryUpdate.getData(),
+                            new ApiResponse.Meta(
+                                    "Categoría Eliminada Correctamente.",
+                                    HttpStatus.OK.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponse<>(
-                        categoryService.delete(id),
+                        null,
                         new ApiResponse.Meta(
-                                "Comunicación establecida con el controlador Category (delete)",
-                                HttpStatus.OK.value(),
+                                categoryUpdate.getErrorMessage(),
+                                HttpStatus.BAD_REQUEST.value(),
                                 LocalDateTime.now()
                         )
                 ));
+
     }
 
 }
