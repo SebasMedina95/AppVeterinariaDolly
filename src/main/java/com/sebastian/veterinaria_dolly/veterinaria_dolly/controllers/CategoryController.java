@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final CustomPagedResourcesAssembler<Category> customPagedResourcesAssembler;
+    private final CustomPagedResourcesAssembler<Category> customPagedResourcesAssembler; //Método personalizado de paginación :)
 
     @Autowired
     public CategoryController(
@@ -63,7 +63,7 @@ public class CategoryController {
         //? Intentamos realizar el registro
         ResponseWrapper<Category> categoryNew = categoryService.create(categoryRequest);
 
-        //? Si ocurre algún error, devolvemos null en la data y el mensaje de lo que pasó
+        //? Si no ocurre algún error, entonces registramos :)
         if( categoryNew.getData() != null ){
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse<>(
@@ -76,7 +76,7 @@ public class CategoryController {
                     ));
         }
 
-        //? Estamos en este punto, el registro fue correcto
+        //? Estamos en este punto, el registro no fue correcto
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponse<>(
                         null,
@@ -100,7 +100,7 @@ public class CategoryController {
 
         if (page < 1) page = 1; //Para controlar la página 0, y que la paginación arranque en 1.
         Sort.Direction direction = order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(direction, sort)); //Generando el esquema de paginación para aplicar y ordernamiento
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by(direction, sort)); //Generando el esquema de paginación para aplicar y ordenamiento
         Page<Category> categories = categoryService.findAll(search, pageable); //Aplicando la paginación JPA -> Incorporo el buscador
         UriComponentsBuilder uriBuilder = ServletUriComponentsBuilder.fromCurrentRequestUri(); //Para la obtención de la URL
 

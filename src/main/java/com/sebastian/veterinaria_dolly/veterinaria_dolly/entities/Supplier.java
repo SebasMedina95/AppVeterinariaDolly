@@ -33,11 +33,19 @@ public class Supplier {
     @Comment("Nombre del proveedor")
     private String name;
 
-    @Column(name = "ADDRESS", nullable = true, length = 150 )
+    @Column(name = "ADDRESS", nullable = false, length = 200 )
     @Comment("Dirección del proveedor")
     private String address;
 
-    @Column(name = "PHONE1", nullable = true, length = 45 )
+    @Column(name = "EMAIL1", nullable = false, length = 150 )
+    @Comment("Email 1 del proveedor")
+    private String email1;
+
+    @Column(name = "EMAIL2", nullable = true, length = 150 )
+    @Comment("Email 2 del proveedor")
+    private String email2;
+
+    @Column(name = "PHONE1", nullable = false, length = 45 )
     @Comment("Teléfono 1 del proveedor")
     private String phone1;
 
