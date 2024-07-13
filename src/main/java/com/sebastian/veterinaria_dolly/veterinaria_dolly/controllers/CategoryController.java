@@ -8,6 +8,8 @@ import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPag
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Controlador de Categorías", description = "Operaciones relacionadas con las categorías")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -40,6 +43,7 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
+    @Operation(summary = "Crear una categoría", description = "Creación de una categoría")
     public ResponseEntity<ApiResponse<Object>> create(
             @Valid
             @RequestBody CreateCategoryDto categoryRequest,
@@ -90,6 +94,7 @@ public class CategoryController {
     }
 
     @GetMapping("/find-all")
+    @Operation(summary = "Obtener todas las categorías", description = "Obtener todas las categorías con paginación y también aplicando filtros")
     public ResponseEntity<ApiResponse<PagedModel<Category>>> findAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -118,6 +123,7 @@ public class CategoryController {
     }
 
     @GetMapping("/find-by-id/{id}")
+    @Operation(summary = "Obtener categoría por ID", description = "Obtener una categoría dado el ID")
     public ResponseEntity<ApiResponse<Category>> findById(@PathVariable Long id){
 
         ResponseWrapper<Category> category = categoryService.findById(id);
@@ -146,6 +152,7 @@ public class CategoryController {
     }
 
     @PutMapping("update-by-id/{id}")
+    @Operation(summary = "Actualizar una categoría", description = "Actualizar una categoría dado el ID")
     public ResponseEntity<ApiResponse<Object>> update(
             @Valid
             @RequestBody UpdateCategoryDto categoryRequest,
@@ -193,6 +200,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete-by-id/{id}")
+    @Operation(summary = "Eliminar una categoría", description = "Eliminar una categoría pero de manera lógica")
     public ResponseEntity<ApiResponse<Category>> delete(@PathVariable Long id){
 
         ResponseWrapper<Category> categoryUpdate = categoryService.delete(id);

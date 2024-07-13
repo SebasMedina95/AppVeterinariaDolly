@@ -22,9 +22,9 @@ $ docker compose up -d
 $ Pendiente por definición.
 ````
 
-* La documentación del proyecto está en el siguiente End Point:
+* La documentación del proyecto está en la siguiente URL:
 ````dockerfile
-$ Pendiente por definición.
+$ http://localhost:9990/swagger-ui/index.html
 ````
 ...
 

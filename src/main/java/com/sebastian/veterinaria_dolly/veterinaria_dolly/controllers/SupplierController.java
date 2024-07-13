@@ -8,6 +8,8 @@ import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPag
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.SupplierService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/suppliers")
+@Tag(name = "Controlador de Proveedores", description = "Operaciones relacionadas con los proveedores")
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -41,6 +44,7 @@ public class SupplierController {
     }
 
     @PostMapping("/create")
+    @Operation(summary = "Crear un proveedor", description = "Creación de un proveedor")
     public ResponseEntity<ApiResponse<Object>> create(
             @Valid
             @RequestBody CreateSupplierDto supplierRequest,
@@ -91,6 +95,7 @@ public class SupplierController {
     }
 
     @GetMapping("/find-all")
+    @Operation(summary = "Obtener todos los proveedores", description = "Obtener todos los proveedores con paginación y también aplicando filtros")
     public ResponseEntity<ApiResponse<PagedModel<Supplier>>> findAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -119,6 +124,7 @@ public class SupplierController {
     }
 
     @GetMapping("/find-by-id/{id}")
+    @Operation(summary = "Obtener proveedor por ID", description = "Obtener un proveedor dado el ID")
     public ResponseEntity<ApiResponse<Supplier>> findById(@PathVariable Long id){
 
         ResponseWrapper<Supplier> supplier = supplierService.findById(id);
@@ -147,6 +153,7 @@ public class SupplierController {
     }
 
     @PutMapping("update-by-id/{id}")
+    @Operation(summary = "Actualizar un proveedor", description = "Actualizar un proveedor dado el ID")
     public ResponseEntity<ApiResponse<Object>> update(
             @Valid
             @RequestBody UpdateSupplierDto supplierRequest,
@@ -194,6 +201,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/delete-by-id/{id}")
+    @Operation(summary = "Eliminar un proveedor", description = "Eliminar un proveedor pero de manera lógica")
     public ResponseEntity<ApiResponse<Supplier>> delete(@PathVariable Long id){
 
         ResponseWrapper<Supplier> supplierUpdate = supplierService.delete(id);
