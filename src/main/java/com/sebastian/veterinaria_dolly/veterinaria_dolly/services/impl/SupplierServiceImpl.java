@@ -148,7 +148,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     //* Para el buscador de categoría.
-    //? Buscarémos solo por el name (Nombre de categoría).
+    //? Buscarémos por nombre, nit, address, emails, phones y description.
     //? NOTA: No olvidar el status.
     public Specification<Supplier> searchByFilter(String search) {
         return (root, query, criteriaBuilder) -> {

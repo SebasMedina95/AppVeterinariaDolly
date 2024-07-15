@@ -1,9 +1,7 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Category;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plaza;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlazaDto;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdateCategoryDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlazaDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPagedResourcesAssembler;

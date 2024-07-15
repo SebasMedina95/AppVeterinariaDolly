@@ -1,6 +1,5 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.services.impl;
 
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Category;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plaza;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plan;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlazaDto;
@@ -78,8 +77,8 @@ public class PlazaServiceImpl implements PlazaService {
 
         Optional<Plaza> plazaOptional = plazaRepository.findById(id);
         if( plazaOptional.isPresent() ){
-            Plaza product = plazaOptional.orElseThrow();
-            return new ResponseWrapper<>(product, "Plaza encontrada por ID correctamente");
+            Plaza plaza = plazaOptional.orElseThrow();
+            return new ResponseWrapper<>(plaza, "Plaza encontrada por ID correctamente");
         }
 
         return new ResponseWrapper<>(null, "La plaza no pudo ser encontrado por el ID");
