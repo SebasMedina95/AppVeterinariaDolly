@@ -1,22 +1,20 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-//import lombok.AllArgsConstructor;
-//import lombok.Builder;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.util.Date;
 
-//@Data
 @Entity
 @Table(name = "TBL_PLAZAS")
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
+@Data
+@EqualsAndHashCode(exclude = "plan")
+@ToString(exclude = "plan")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Plaza {
 
     @Id
@@ -58,90 +56,4 @@ public class Plaza {
     @Comment("Plan relacionado")
     private Plan plan;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public String getUserCreated() {
-        return userCreated;
-    }
-
-    public void setUserCreated(String userCreated) {
-        this.userCreated = userCreated;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public String getUserUpdated() {
-        return userUpdated;
-    }
-
-    public void setUserUpdated(String userUpdated) {
-        this.userUpdated = userUpdated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
-    }
-
-    public Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(Plan plan) {
-        this.plan = plan;
-    }
-
-    @Override
-    public String toString() {
-        return "Plaza{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", available=" + available +
-                ", status=" + status +
-                ", userCreated='" + userCreated + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", userUpdated='" + userUpdated + '\'' +
-                ", dateUpdated=" + dateUpdated +
-                ", plan=" + plan +
-                '}';
-    }
 }
