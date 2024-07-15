@@ -12,11 +12,11 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "TBL_SERVICES")
+@Table(name = "TBL_PLANS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Service {
+public class Plan {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -63,7 +63,7 @@ public class Service {
     @Comment("Fecha actualización del servicio")
     private Date dateUpdated;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Plaza> plazas;
 
 }

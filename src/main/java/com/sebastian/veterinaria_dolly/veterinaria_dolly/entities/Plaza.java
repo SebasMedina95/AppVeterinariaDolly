@@ -54,9 +54,9 @@ public class Plaza {
     private Date dateUpdated;
 
     @ManyToOne
-    @JoinColumn(name = "FK_SERVICE")
+    @JoinColumn(name = "FK_PLAN")
     @JsonManagedReference
-    @Comment("Servicio relacionado")
-    private Service service;
+    @Comment("Plan relacionado")
+    private Plan plan;
 
 }
