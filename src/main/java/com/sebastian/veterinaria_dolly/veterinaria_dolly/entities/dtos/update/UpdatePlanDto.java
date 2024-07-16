@@ -1,10 +1,7 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor

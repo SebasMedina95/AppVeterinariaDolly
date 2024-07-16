@@ -1,12 +1,10 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.services.impl;
 
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plan;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plaza;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlanDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlanDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.repositories.PlanRepository;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.repositories.PlazaRepository;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,8 +90,6 @@ public class PlanServiceImpl implements PlanService {
             Optional<Plan> getPlanOptional = planRepository.findById(id);
             if( getPlanOptional.isEmpty() )
                 return new ResponseWrapper<>(null, "El plan no fue encontrado");
-
-            Plan getPlan = getPlanOptional.orElseThrow();
 
             //? Validemos que no se repita el plan
             String planName = plan.getName().trim().toUpperCase();

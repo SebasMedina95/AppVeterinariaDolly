@@ -1,17 +1,13 @@
 package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plan;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plaza;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlanDto;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlazaDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlanDto;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlazaDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPagedResourcesAssembler;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.PlanService;
-import com.sebastian.veterinaria_dolly.veterinaria_dolly.services.PlazaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
