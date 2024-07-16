@@ -4,6 +4,8 @@ import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plan;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Plaza;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlanDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreatePlazaDto;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlanDto;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.update.UpdatePlazaDto;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.CustomPagedResourcesAssembler;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
@@ -145,6 +147,84 @@ public class PlanController {
                         null,
                         new ApiResponse.Meta(
                                 plan.getErrorMessage(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                LocalDateTime.now()
+                        )
+                ));
+
+    }
+
+    @PutMapping("update-by-id/{id}")
+    @Operation(summary = "Actualizar un plan", description = "Actualizar un plan dado el ID")
+    public ResponseEntity<ApiResponse<Object>> update(
+            @Valid
+            @RequestBody UpdatePlanDto planRequest,
+            BindingResult result,
+            @PathVariable Long id
+    ){
+
+        if(result.hasFieldErrors()){
+            ErrorsValidationsResponse errors = new ErrorsValidationsResponse();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse<>(
+                            errors.validation(result),
+                            new ApiResponse.Meta(
+                                    "Errores en los campos",
+                                    HttpStatus.BAD_REQUEST.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        ResponseWrapper<Plan> planUpdate = planService.update(id, planRequest);
+
+        if( planUpdate.getData() != null ){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<>(
+                            planUpdate.getData(),
+                            new ApiResponse.Meta(
+                                    "Plan Actualizado Correctamente.",
+                                    HttpStatus.OK.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(
+                        null,
+                        new ApiResponse.Meta(
+                                planUpdate.getErrorMessage(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                LocalDateTime.now()
+                        )
+                ));
+
+    }
+
+    @DeleteMapping("/delete-by-id/{id}")
+    @Operation(summary = "Eliminar un plan", description = "Eliminar un plan pero de manera lógica")
+    public ResponseEntity<ApiResponse<Plan>> delete(@PathVariable Long id){
+
+        ResponseWrapper<Plan> planUpdate = planService.delete(id);
+
+        if( planUpdate.getData() != null ){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<>(
+                            planUpdate.getData(),
+                            new ApiResponse.Meta(
+                                    "Plan Eliminado Correctamente.",
+                                    HttpStatus.OK.value(),
+                                    LocalDateTime.now()
+                            )
+                    ));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(
+                        null,
+                        new ApiResponse.Meta(
+                                planUpdate.getErrorMessage(),
                                 HttpStatus.BAD_REQUEST.value(),
                                 LocalDateTime.now()
                         )

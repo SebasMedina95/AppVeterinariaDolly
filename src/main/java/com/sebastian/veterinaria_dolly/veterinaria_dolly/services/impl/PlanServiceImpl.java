@@ -81,13 +81,71 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public ResponseWrapper<Plan> update(Long id, UpdatePlanDto service) {
-        return null;
+    public ResponseWrapper<Plan> update(Long id, UpdatePlanDto plan) {
+
+        Optional<Plan> planOptional = planRepository.findById(id);
+        if( planOptional.isPresent() ){
+
+            Plan planDb = planOptional.orElseThrow();
+
+            //? Validemos que el Id de Plan proporcionado existe
+            Optional<Plan> getPlanOptional = planRepository.findById(id);
+            if( getPlanOptional.isEmpty() )
+                return new ResponseWrapper<>(null, "El plan no fue encontrado");
+
+            Plan getPlan = getPlanOptional.orElseThrow();
+
+            //? Validemos que no se repita el plan
+            String planName = plan.getName().trim().toUpperCase();
+            Optional<Plan> getPlanOptionalName = planRepository.getPlanByNameForEdit(planName, id);
+
+            if( getPlanOptionalName.isPresent() )
+                return new ResponseWrapper<>(null, "El nombre de plan ya está registrado");
+
+            //? DEBEMOS HACER LO DE LA IMAGEN DEL PLAN (Revisar como hacerlo con Cloudinary)
+            // *************************************** //
+
+            //? Vamos a actualizar si llegamos hasta acá
+            planDb.setName(planName);
+            planDb.setHighSeasonPrice(plan.getHighSeasonPrice());
+            planDb.setLowSeasonPrice(plan.getLowSeasonPrice());
+            planDb.setImages("[default]"); //Mientras se hace lo de las imágenes
+            planDb.setDescription(plan.getDescription());
+            planDb.setUserUpdated(dummiesUser);
+            planDb.setDateUpdated(new Date());
+
+            return new ResponseWrapper<>(planRepository.save(planDb), "Plan Actualizado Correctamente");
+
+        }else{
+
+            return new ResponseWrapper<>(null, "El Plan no fue encontrado");
+
+        }
+
     }
 
     @Override
     public ResponseWrapper<Plan> delete(Long id) {
-        return null;
+
+        Optional<Plan> planOptional = planRepository.findById(id);
+        if( planOptional.isPresent() ){
+
+            Plan planDb = planOptional.orElseThrow();
+
+            //? Vamos a actualizar si llegamos hasta acá
+            //? ESTO SERÁ UN ELIMINADO LÓGICO!
+            planDb.setStatus(false);
+            planDb.setUserUpdated("usuario123");
+            planDb.setDateUpdated(new Date());
+
+            return new ResponseWrapper<>(planRepository.save(planDb), "Plan Eliminado Correctamente");
+
+        }else{
+
+            return new ResponseWrapper<>(null, "El Plan no fue encontrado");
+
+        }
+
     }
 
     //* Para el buscador de planes.
