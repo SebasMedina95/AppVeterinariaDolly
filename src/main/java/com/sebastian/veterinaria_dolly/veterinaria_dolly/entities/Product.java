@@ -42,9 +42,9 @@ public class Product {
     @Comment("Descripción del producto")
     private String description;
 
-    @Column(name = "SIZE", nullable = false, length = 200 )
-    @Comment("Tamaño del producto")
-    private String size;
+    @Column(name = "SIZES", nullable = false, length = 200 )
+    @Comment("Tamaños del producto")
+    private String sizes;
 
     @Column(name = "IMAGES", nullable = true, length = 5000 )
     @Comment("Galería de Imágenes")

@@ -2,6 +2,9 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,9 +32,15 @@ public class CreateProductDto {
 
     @NotEmpty(message = "El array de tallas del producto es requerida")
     @Size(min = 5, max = 200, message = "El array de tallas del producto debe ser mínimo de 1 caracteres y máximo de 200")
-    private String size;
+    private String sizes;
+
+    @NotNull(message = "El id de la categoría es requerido")
+    private Long categoryId;
+
+    @NotNull(message = "El id de del proveedor es requerido")
+    private Long supplierId;
 
     //Opcional por ahora
-    private String images;
+    private List<MultipartFile> images;
 
 }
