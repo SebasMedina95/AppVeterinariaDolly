@@ -43,7 +43,6 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Object>> create(
             @Valid @ModelAttribute CreateProductDto productCreateDTO,
             BindingResult result
-            //@RequestParam(value = "images", required = false) List<MultipartFile> images //Para manejar mejor el tema de las imágenes
     ) throws IOException {
 
         // Validar tipo de archivo
@@ -71,6 +70,7 @@ public class ProductController {
         productRequest.setCategoryId(productCreateDTO.getCategoryId());
         productRequest.setSupplierId(productCreateDTO.getSupplierId());
         productRequest.setSizes(String.join(",", productCreateDTO.getSizes()));
+        productRequest.setColors(String.join(",", productCreateDTO.getColors()));
         productRequest.setImages(productCreateDTO.getImages());
 
         //? Chequeamos errores en los campos proporcionados

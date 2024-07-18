@@ -34,6 +34,10 @@ public class CreateProductDto {
     @Size(min = 5, max = 200, message = "El array de tallas del producto debe ser mínimo de 1 caracteres y máximo de 200")
     private String sizes;
 
+    @NotEmpty(message = "El array de colores del producto es requerida")
+    @Size(min = 5, max = 200, message = "El array de colores del producto debe ser mínimo de 1 caracteres y máximo de 200")
+    private String colors;
+
     @NotNull(message = "El id de la categoría es requerido")
     private Long categoryId;
 

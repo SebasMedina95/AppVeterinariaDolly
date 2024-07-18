@@ -46,6 +46,10 @@ public class Product {
     @Comment("Tamaños del producto")
     private String sizes;
 
+    @Column(name = "COLORS", nullable = false, length = 200 )
+    @Comment("Colores del producto")
+    private String colors;
+
     @Column(name = "IMAGES", nullable = true, length = 5000 )
     @Comment("Galería de Imágenes")
     private String images;
