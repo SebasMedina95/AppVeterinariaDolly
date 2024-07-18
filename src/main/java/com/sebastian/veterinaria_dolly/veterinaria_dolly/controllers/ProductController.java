@@ -2,6 +2,7 @@ package com.sebastian.veterinaria_dolly.veterinaria_dolly.controllers;
 
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.Product;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.entities.dtos.create.CreateProductDto;
+import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.uploads.ValidImageType;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ApiResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ErrorsValidationsResponse;
 import com.sebastian.veterinaria_dolly.veterinaria_dolly.helpers.utils.ResponseWrapper;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -25,10 +27,15 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ValidImageType validImageType;
 
     @Autowired
-    public ProductController(ProductService productService){
+    public ProductController(
+            ProductService productService,
+            ValidImageType validImageType
+    ){
         this.productService = productService;
+        this.validImageType = validImageType;
     }
 
     @PostMapping(value = "/create", consumes = "multipart/form-data")
@@ -38,6 +45,23 @@ public class ProductController {
             BindingResult result
             //@RequestParam(value = "images", required = false) List<MultipartFile> images //Para manejar mejor el tema de las imágenes
     ) throws IOException {
+
+        // Validar tipo de archivo
+        if(!productCreateDTO.getImages().isEmpty()){
+            for (MultipartFile file : productCreateDTO.getImages()) {
+                if (!validImageType.isValidImageType(file)) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ApiResponse<>(
+                                    null,
+                                    new ApiResponse.Meta(
+                                            "Está intentando adjuntar imágenes y solo se permiten en formato JPG, JPEG y PNG",
+                                            HttpStatus.BAD_REQUEST.value(),
+                                            LocalDateTime.now()
+                                    )
+                            ));
+                }
+            }
+        }
 
         CreateProductDto productRequest = new CreateProductDto();
         productRequest.setName(productCreateDTO.getName());
