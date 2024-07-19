@@ -1,4 +1,7 @@
 # INICIO DE LA APLICACIÓN
+
+# NOTA: 19/07/2024 (Vamos a detener temporalmente el desarrollo mientras re ajustamos algunos criterios del desarrollo y lógica de negocio ... Fecha tentativa: )
+
 La presente aplicación pretende simular los servicios de una veterinaria donde, 
 además de prestar los diferentes servicios de urgencia, atención y Spa, también 
 venderá productos en la modalidad de comercio electrónico. La aplicación está 
